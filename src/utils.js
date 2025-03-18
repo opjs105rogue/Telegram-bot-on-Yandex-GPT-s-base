@@ -1,11 +1,11 @@
-async function getIamToken() {
+async function getIamToken(token) {
     const IamToken = await fetch('https://iam.api.cloud.yandex.net/iam/v1/tokens', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            yandexPassportOauthToken: process.env.OAuthToken
+            yandexPassportOauthToken: token
         })
     }).catch(error => console.error(`Ошибка: ${error}`))
     
