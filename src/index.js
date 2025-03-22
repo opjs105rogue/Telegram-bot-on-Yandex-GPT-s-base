@@ -3,12 +3,19 @@ import { repository } from './utils.js'
 
 dotenv.config();
 
-const requestBody = {
-    "modelUri": `gpt://${process.env.FOLDER_ID}/yandexgpt`,
+const getTextCompletion = async (options = {}) => {
+  const response = await fetch('https://llm.api.cloud.yandex.net/foundationModels/v1/completion', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${repository.value}`
+    },
+    body: JSON.stringify({
+      "modelUri": `gpt://${process.env.FOLDER_ID}/yandexgpt`,
     "completionOptions": {
       "stream": false,
       "temperature": 0.6,
-      "maxTokens": "2000",
+      "maxTokens": "48000",
       "reasoningOptions": {
         "mode": "DISABLED"
       }
@@ -16,23 +23,11 @@ const requestBody = {
     "messages": [
       {
         "role": "system",
-        "text": "Найди ошибки в тексте и исправь их"
+        "text": options.role,
       },
-      {
-        "role": "user",
-        "text": "Ламинат подойдет для укладке на кухне или в детской комнате – он не боиться влаги и механических повреждений благодаря защитному слою из облицованных меламиновых пленок толщиной 0,2 мм и обработанным воском замкам."
-      }
+      ...options.messages
     ]
-  }
-
-const getTextCompletion = async (IamToken) => {
-  const response = await fetch('https://llm.api.cloud.yandex.net/foundationModels/v1/completion', {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${repository.value}`
-    },
-    body: JSON.stringify(requestBody), 
+    }), 
   })
 
   const result = await response.json();
