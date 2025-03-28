@@ -17,7 +17,7 @@ export const repository = {
     value: null,
     timer: null,
     async init(token) {
-        const ONE_HOUR = 2000; //1000 * 3600;
+        const ONE_HOUR = 1000 * 3600;
         const setIamToken = async () => {
             const {iamToken} = await getIamToken(token);
             this.value = iamToken;
