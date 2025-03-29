@@ -7,10 +7,24 @@ import { message } from 'telegraf/filters';
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
+
+await bot.telegram.setMyCommands([
+    {
+        command: '/start',
+        description: 'Сброс контекста'
+    },
+    {
+        command: '/reset',
+        description: 'Сброс контекста'
+    },
+    {
+        command: '/role',
+        description: 'Задать prompt для роли'
+    }
+])
+
+
 bot.on(message, (ctx) => ctx.reply('Hello World!'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.launch()
 
 // Enable graceful stop
