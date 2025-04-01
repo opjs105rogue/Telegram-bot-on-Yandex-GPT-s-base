@@ -3,7 +3,7 @@ import { repository } from './getIamTokenUtil.js'
 
 dotenv.config();
 
-const getTextCompletion = async (options = {}) => {
+const getTextCompletion = async (userText, options = {}) => {
   const response = await fetch('https://llm.api.cloud.yandex.net/foundationModels/v1/completion', {
     method: "POST",
     headers: {
@@ -23,11 +23,11 @@ const getTextCompletion = async (options = {}) => {
     "messages": [
       {
         role: "user",
-        text: 'Напиши сортировку пузырьком',
+        text: userText ,
       },
       {
         role: "assistant",
-        text: "Пример на JavaScript"
+        text: 'text'
       }
     ]
     }), 
